@@ -1,4 +1,9 @@
 h1 {
   font-weight: bold;
-  font-family: Helvetica, sans-serif;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+body {
+  background-color: #21262d;
+  color: #f0f6fc;
 }
