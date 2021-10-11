@@ -6,6 +6,7 @@
     "builsd": "parcel build"
   },
   "devDependencies": {
+    "@parcel/transformer-glsl": "latest",
     "eslint": "latest",
     "parcel": "latest"
   }
