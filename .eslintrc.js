@@ -12,7 +12,7 @@ export default {
 	},
 	'parserOptions': {
 		'ecmaFeatures': {
-			'jsx': true
+			'impliedStrict': true
 		},
 		'ecmaVersion': 13,
 		'sourceType': 'module'
