@@ -1,4 +1,16 @@
+# node
 node_modules
 package-lock.json
+
+# parcel cache
+.cache
 .parcel-cache
+
+# parcel build output
 dist
+
+# macOS
+.DS_Store
+
+# VSCode settings
+.vscode
