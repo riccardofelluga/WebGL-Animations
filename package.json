@@ -1,0 +1,12 @@
+{
+  "name": "webgl-animations",
+  "source": "src/index.html",
+  "scripts": {
+    "start": "parcel",
+    "builsd": "parcel build"
+  },
+  "devDependencies": {
+    "eslint": "latest",
+    "parcel": "latest"
+  }
+}
