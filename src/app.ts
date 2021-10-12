@@ -1,3 +1,4 @@
+import simple_shader from './shaders/simple_shader.glsl'
 
 function main() {
 	const canvas = <HTMLCanvasElement>document.querySelector('#gl-context')
