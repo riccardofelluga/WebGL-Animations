@@ -11,7 +11,7 @@ class ShaderProgram {
 		this._program = this._gl.createProgram()
 	}
 
-	AddShader(gl_shader_typ: number, sh_src: string): void {
+	addShader(gl_shader_typ: number, sh_src: string): void {
 		const shader = this._gl.createShader(gl_shader_typ)
 		this._gl.shaderSource(shader, sh_src)
 		this._gl.compileShader(shader)
@@ -24,7 +24,7 @@ class ShaderProgram {
 		this._gl.deleteShader(shader)
 	}
 
-	Bind(): void {
+	bind(): void {
 		if (!this._is_liked) {
 			this._gl.linkProgram(this._program)
 			this._gl.validateProgram(this._program)
@@ -35,7 +35,7 @@ class ShaderProgram {
 
 	// TODO Unbind(): void { }
 
-	GetLocation(name: string): number {
+	getLocation(name: string): number {
 		return this._gl.getAttribLocation(this._program, name)
 	}
 
@@ -52,15 +52,16 @@ function main() {
 	}
 
 	const program = new ShaderProgram(gl)
-	program.AddShader(gl.VERTEX_SHADER, vert_sh_src)
-	program.AddShader(gl.FRAGMENT_SHADER, frag_sh_src)
-	program.Bind()
+	program.addShader(gl.VERTEX_SHADER, vert_sh_src)
+	program.addShader(gl.FRAGMENT_SHADER, frag_sh_src)
+	program.bind()
 
 	const pos_buffer = gl.createBuffer()
 	const a_location = program.GetLocation('a_pos')
 	const a_pos_ncomponents = 2
 
-	const triangle: Array<number> = [
+	const a_location = program.getLocation('a_pos')
+	const a_components = 2
 		0, 0,
 		0, 0.5,
 		0.7, 0
