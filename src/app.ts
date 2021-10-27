@@ -40,7 +40,16 @@ class ShaderProgram {
 		return this._gl.getAttribLocation(this._program, name)
 	}
 
+	setUniform(name: string, value: vec4) {
+		if (!this._is_liked) {
+			console.log('Program must be liked before setting uniform!')
+			return
 }
+		const location = this._gl.getUniformLocation(this._program, name)
+		this._gl.uniform4fv(location, value)
+	}
+}
+
 class Geometry {
 	private _gl: WebGL2RenderingContext
 	private _vbo_id: WebGLBuffer
