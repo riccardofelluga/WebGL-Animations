@@ -1,4 +1,5 @@
 import frag_sh_src from './shaders/simple_fragment.glsl'
+import { vec4 } from 'gl-matrix'
 import vert_sh_src from './shaders/simple_vertex.glsl'
 
 class ShaderProgram {

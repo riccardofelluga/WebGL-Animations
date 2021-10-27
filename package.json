@@ -7,9 +7,13 @@
   },
   "devDependencies": {
     "@parcel/transformer-glsl": "latest",
+    "@types/gl-matrix": "^3.2.0",
     "@typescript-eslint/eslint-plugin": "latest",
     "@typescript-eslint/parser": "latest",
     "eslint": "latest",
     "parcel": "latest"
+  },
+  "dependencies": {
+    "gl-matrix": "^3.4.3"
   }
 }
