@@ -76,10 +76,10 @@ class Geometry {
 
 function main() {
 	const canvas = <HTMLCanvasElement>document.querySelector('#gl-context')
-	const gl = canvas.getContext('webgl')
+	const gl = canvas.getContext('webgl2')
 	gl.viewport(0, 0, canvas.width, canvas.height)
 	if (gl === null) {
-		console.error('Unable to run WebGL on this browser.')
+		console.error('Unable to run WebGL2 on this browser.')
 		return
 	}
 
