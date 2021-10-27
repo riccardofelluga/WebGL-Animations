@@ -1,4 +1,4 @@
 declare module '*.glsl' {
-    const value: string
-    export default value
+    const v: string
+    export default v
 }
