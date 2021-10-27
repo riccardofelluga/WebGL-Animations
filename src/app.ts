@@ -3,10 +3,10 @@ import vert_sh_src from './shaders/simple_vertex.glsl'
 
 class ShaderProgram {
 	private _program: WebGLProgram
-	private _gl: WebGLRenderingContext
+	private _gl: WebGL2RenderingContext
 	private _is_liked = false
 
-	constructor (gl: WebGLRenderingContext) {
+	constructor (gl: WebGL2RenderingContext) {
 		this._gl = gl
 		this._program = this._gl.createProgram()
 	}
