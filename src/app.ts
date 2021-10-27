@@ -40,7 +40,39 @@ class ShaderProgram {
 	}
 
 }
+class Geometry {
+	private _gl: WebGL2RenderingContext
+	private _vbo_id: WebGLBuffer
+	private _ibo_id: WebGLBuffer
+	private _vao_id: WebGLVertexArrayObject
+	private _ibo_size: number
 
+	constructor (gl: WebGL2RenderingContext, vertex_buffer: Array<number>, index_buffer: Array<number>) {
+		this._gl = gl
+		this._vao_id = this._gl.createVertexArray()
+		this._gl.bindVertexArray(this._vao_id)
+
+		this._vbo_id = this._gl.createBuffer()
+		this._gl.bindBuffer(this._gl.ARRAY_BUFFER, this._vbo_id)
+		this._gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertex_buffer), gl.STATIC_DRAW)
+
+		this._ibo_size = index_buffer.length
+		this._ibo_id = this._gl.createBuffer()
+		this._gl.bindBuffer(this._gl.ELEMENT_ARRAY_BUFFER, this._ibo_id)
+		this._gl.bufferData(this._gl.ELEMENT_ARRAY_BUFFER, new Uint32Array(index_buffer), this._gl.STATIC_DRAW)
+	}
+
+	setAttribute(location: number, size: number, stride: number, offset: number): void {
+		this._gl.bindBuffer(this._gl.ARRAY_BUFFER, this._vbo_id)
+		this._gl.vertexAttribPointer(location, size, this._gl.FLOAT, false, stride, offset)
+		this._gl.enableVertexAttribArray(location)
+	}
+
+	render(): void {
+		this._gl.bindVertexArray(this._vao_id)
+		this._gl.drawElements(this._gl.TRIANGLES, this._ibo_size, this._gl.UNSIGNED_INT, 0)
+	}
+}
 
 function main() {
 	const canvas = <HTMLCanvasElement>document.querySelector('#gl-context')
@@ -62,22 +94,36 @@ function main() {
 
 	const a_location = program.getLocation('a_pos')
 	const a_components = 2
+
+	const cube = [
 		0, 0,
 		0, 0.5,
-		0.7, 0
+		0.7, 0,
+		0.7, 0.5
+	]
+	const cube2 = [
+		0.1, 0.1,
+		0.1, 0.6,
+		0.8, 0.1,
+		0.8, 0.6
+	]
+	const cube_idx = [
+		0, 1, 2,
+		2, 1, 3
 	]
 
-	gl.bindBuffer(gl.ARRAY_BUFFER, pos_buffer)
-	gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(triangle), gl.STATIC_DRAW)
-	gl.enableVertexAttribArray(a_location)
-	gl.vertexAttribPointer(a_location, a_pos_ncomponents, gl.FLOAT, false, 0, 0)
+	const mesh = new Geometry(gl, cube, cube_idx)
+	mesh.setAttribute(a_location, a_components, 0, 0)
 
+	const mesh2 = new Geometry(gl, cube2, cube_idx)
+	mesh2.setAttribute(a_location, a_components, 0, 0)
 
 	gl.clearColor(0.8, 0.7, 0.7, 1.0)
 	gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 	gl.enable(gl.DEPTH_TEST)
 
-	gl.drawArrays(gl.TRIANGLES, 0, 3)
+	mesh.render()
+	mesh2.render()
 }
 
 window.onload = main
