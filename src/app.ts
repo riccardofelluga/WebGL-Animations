@@ -99,7 +99,7 @@ function parseOBJ(text: string) {
 	}
 
 	const lines = text.split('\n')
-	for(let i = 0; i < lines.length; i++) {
+	for (let i = 0; i < lines.length; i++) {
 		const line = lines[i].trim()
 		if (line === '' || line[0] === '#') {
 			continue
