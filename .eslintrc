@@ -7,7 +7,8 @@
 	"plugins": [
 		"@typescript-eslint"
 	],
-	"extends": [ "eslint:recommended",
+	"extends": [
+		"eslint:recommended",
 		"plugin:@typescript-eslint/eslint-recommended",
 		"plugin:@typescript-eslint/recommended"
 	],
@@ -23,16 +24,45 @@
 		"sourceType": "module"
 	},
 	"rules": {
-		"semi":[ "error", "never" ],
+		"semi": [
+			2,
+			"never"
+		],
 		"no-var": "error",
-		"quotes": [ "error", "single" ],
-		"object-curly-spacing": [ "error", "always" ],
-		"array-bracket-spacing": [ "error", "always" ],
-		"sort-imports": [ 2, {
-			"ignoreCase": true,
-			"ignoreMemberSort": true,
-			"memberSyntaxSortOrder": [ "none", "all", "multiple", "single" ]
-		} ],
-		"indent": [ "error", "tab" ]
+		"quotes": [
+			"error",
+			"single"
+		],
+		"object-curly-spacing": [
+			"error",
+			"always"
+		],
+		"array-bracket-spacing": [
+			"error",
+			"always"
+		],
+		"func-call-spacing": "error",
+		"keyword-spacing": "error",
+		"key-spacing": "error",
+		"comma-spacing": "error",
+		"sort-imports": [
+			"error",
+			{
+				"ignoreCase": true,
+				"ignoreMemberSort": true,
+				"memberSyntaxSortOrder": [
+					"none",
+					"all",
+					"multiple",
+					"single"
+				]
+			}
+		],
+		"no-trailing-spaces": "error",
+		"camelcase": "error",
+		"indent": [
+			2,
+			2
+		]
 	}
 }
