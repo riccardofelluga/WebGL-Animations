@@ -5,9 +5,71 @@
     <title>🚀WebGL</title>
     <link rel="stylesheet" href="style.css"/>
     <script type="module" src="app.ts"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.12.0/js/all.js"></script>
+    <script>
+      function clicked(){console.log("meow");}
+      function onHoverIn(id) {
+        document.getElementById(id).style.backgroundColor = "red";
+        document.getElementById(id).style.borderColor = "rgba(184, 184, 5, 0.5)";
+      }
+      function onHoverOut(id) {
+        document.getElementById(id).style.backgroundColor = "white";
+        document.getElementById(id).style.borderColor = "rgb(184, 184, 5)";
+      }
+    </script>
   </head>
   <body>
-    <h1>WebGL Animations 🚀</h1>
-    <canvas id="gl-context" width="640" height="480"></canvas>
+    <div style="display: flex; flex-direction: row; background-color: red;">
+      <h2 style="width: 50%; max-height: 100px;  text-align: left; padding-left: 5%;">WebGL Animations 🚀</h2>
+      <h2 style="width: 50%; max-height: 100px; text-align: right; padding-right: 5%;">Jacob Young | Riccardo Felluga | Unni Kohonen</h2>
+    </div>
+
+    <!-- MIDDLE CONTENT Push this in about 10%-->
+    <div style="display: flex; flex-direction: row;  min-height: 700px; background-color: rgb(24, 24, 24)">
+      <div style="display: flex; width: 80%; justify-content: center;">
+        <canvas id="gl-context" width="640" height="480"></canvas>
+      </div>
+      <div class="file_properties">
+        <div class="file_info" style="height: 90%;">
+          <h4>Object attributes:</h4>
+          <h4>file type: </h4>
+          <h4>file size: </h4>
+          <h4>num polys: </h4>
+        </div>
+        <div class="add_file" style="display: flex; flex-direction: column; height: 10%; margin: 25px; justify-content: center; align-items: space-around;">
+          <button id="add_file_button" onclick="clicked()" onmouseover="onHoverIn(this.id)" onmouseout="onHoverOut(this.id)">
+            <i class="fas fa-plus fa-3x text-primary"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER  -->
+    <div style="display: flex; flex-direction: row; background: red; max-height: 100px; justify-content: space-around;">
+      <div class="timeline"></div>
+      <div style="display: flex; width: 30%; margin-right: 5%; background-color: red;">
+        <div style="display: flex; flex-direction: row; width: 33%; padding: 10px; flex-shrink: 3;">
+          <button id="b1" onclick="clicked()" onmouseover="onHoverIn(this.id)" onmouseout="onHoverOut(this.id)">
+            <i class="fas fa-play fa-2x text-primary"></i> 
+          </button>
+          <button id="b2" onclick="clicked()" onmouseover="onHoverIn(this.id)" onmouseout="onHoverOut(this.id)">
+            <i class="fas fa-pause fa-2x text-primary"></i> 
+          </button>
+        </div>
+        <div style="display: flex; flex-direction: row; width: 33%; padding: 10px; flex-shrink: 3;">
+          <button id="b3" onclick="clicked()" onmouseover="onHoverIn(this.id)" onmouseout="onHoverOut(this.id)">
+            <i class="fas fa-backward fa-2x text-primary"></i> 
+          </button>
+          <button id="b4" onclick="clicked()" onmouseover="onHoverIn(this.id)" onmouseout="onHoverOut(this.id)">
+            <i class="fas fa-forward fa-2x text-primary"></i> 
+          </button>
+        </div>
+        <div style="display: flex; flex-direction: row; width: 33%; padding: 10px; flex-shrink: 3;">
+          <button id="b5" onclick="clicked()" onmouseover="onHoverIn(this.id)" onmouseout="onHoverOut(this.id)">
+            <i class="fas fa-redo fa-2x text-primary"></i> 
+          </button>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
