@@ -44,7 +44,7 @@ class ShaderProgram {
 		if (!this._is_liked) {
 			console.log('Program must be liked before setting uniform!')
 			return
-}
+		}
 		const location = this._gl.getUniformLocation(this._program, name)
 		this._gl.uniform4fv(location, value)
 	}
@@ -84,6 +84,45 @@ class Geometry {
 	}
 }
 
+function parseOBJ(text: string) {
+
+	const vertexData = []
+	const indexData = []
+
+	const keywords = {
+		v: (args: Array<string>) => {
+			args.forEach(a => vertexData.push(parseFloat(a)))
+		},
+		f: (args: Array<string>) => {
+			args.forEach(a => indexData.push(parseFloat(a) - 1))
+		}
+	}
+
+	const lines = text.split('\n')
+	for(let i = 0; i < lines.length; i++) {
+		const line = lines[i].trim()
+		if (line === '' || line[0] === '#') {
+			continue
+		}
+
+		const keyword = line.split(/\s+/)[0]
+		const args = line.split(/\s+/).splice(1)
+
+		const handler = keywords[keyword]
+		if (!handler) {
+			console.log(`Unhandled keyword: ${keyword} at line ${i + 1}`)
+			continue
+		}
+
+		handler(args)
+	}
+
+	return {
+		vertexData,
+		indexData
+	}
+}
+
 function main() {
 	const canvas = <HTMLCanvasElement>document.querySelector('#gl-context')
 	const gl = canvas.getContext('webgl2')
@@ -99,8 +138,8 @@ function main() {
 	program.bind()
 
 	const pos_buffer = gl.createBuffer()
-	const a_location = program.GetLocation('a_pos')
-	const a_pos_ncomponents = 2
+//	const a_location = program.GetLocation('a_pos')
+//	const a_pos_ncomponents = 2
 
 	const a_location = program.getLocation('a_pos')
 	const a_components = 2
@@ -128,12 +167,26 @@ function main() {
 	const mesh2 = new Geometry(gl, cube2, cube_idx)
 	mesh2.setAttribute(a_location, a_components, 0, 0)
 
+	const OBJtext = `
+	v 0 0
+	v 0 -0.5
+	v -0.7 0
+	v -0.7 -0.5
+
+	f 1 2 3
+	f 3 2 4
+	`
+	const obj = parseOBJ(OBJtext)
+	const mesh3 = new Geometry(gl, obj.vertexData, obj.indexData)
+	mesh3.setAttribute(a_location, a_components, 0, 0)
+
 	gl.clearColor(0.8, 0.7, 0.7, 1.0)
 	gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 	gl.enable(gl.DEPTH_TEST)
 
 	mesh.render()
 	mesh2.render()
+	mesh3.render()
 }
 
 window.onload = main
