@@ -153,6 +153,8 @@ function main() {
 		console.error('Unable to run WebGL2 on this browser.')
 		return
 	}
+	gl.viewport(0, 0, canvas.width, canvas.height)
+
 	const camera = new Camera(
 		[0.0, 0.0, 3.0],
 		[0.0, 0.0, -1.0],
