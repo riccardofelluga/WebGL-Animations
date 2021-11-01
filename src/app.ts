@@ -98,9 +98,8 @@ function main() {
 	program.addShader(gl.FRAGMENT_SHADER, frag_sh_src)
 	program.bind()
 
-	const pos_buffer = gl.createBuffer()
-	const a_location = program.GetLocation('a_pos')
-	const a_pos_ncomponents = 2
+	program.setUniform('u_color', [0.3, 0.2, 0.7, 1.0])
+	program.setUniform('u_mv_mat', [0.3, 0.2, 0.7, 1.0])
 
 	const a_location = program.getLocation('a_pos')
 	const a_components = 2
