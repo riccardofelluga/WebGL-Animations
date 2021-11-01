@@ -1,3 +1,4 @@
+import { vec3, vec4, mat4, glMatrix } from 'gl-matrix'
 import frag_sh_src from './shaders/simple_fragment.glsl'
 import { vec4 } from 'gl-matrix'
 import vert_sh_src from './shaders/simple_vertex.glsl'
@@ -123,6 +124,27 @@ function parseOBJ(text: string) {
 	}
 }
 
+class Camera {
+	private _eye: vec3
+	private _center: vec3
+	private _direction: vec3
+	private _up: vec3
+	private _aspect_ratio = 1.333
+	private _fov = 60.0
+
+	constructor (eye: vec3, direction: vec3, up: vec3) {
+		this._eye = eye
+		this._direction = direction
+		this._up = up
+		this._center = vec3.add(vec3.create(), this._eye, this._direction)
+	}
+
+	viewProjectionMatrix(): mat4 {
+		const perspective = mat4.perspective(mat4.create(), glMatrix.toRadian(this._fov), this._aspect_ratio, 0.1, 100.0)
+		const look_at = mat4.lookAt(mat4.create(), this._eye, this._center, this._up)
+		return mat4.mul(mat4.create(), perspective, look_at)
+	}
+}
 function main() {
 	const canvas = <HTMLCanvasElement>document.querySelector('#gl-context')
 	const gl = canvas.getContext('webgl2')
@@ -131,6 +153,11 @@ function main() {
 		console.error('Unable to run WebGL2 on this browser.')
 		return
 	}
+	const camera = new Camera(
+		[0.0, 0.0, 3.0],
+		[0.0, 0.0, -1.0],
+		[0.0, 1.0, 0.0]
+	)
 
 	const program = new ShaderProgram(gl)
 	program.addShader(gl.VERTEX_SHADER, vert_sh_src)
