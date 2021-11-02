@@ -1,9 +1,9 @@
 import { vec4, mat4 } from 'gl-matrix'
 
 export class ShaderProgram {
-  private _program: WebGLProgram;
-  private _gl: WebGL2RenderingContext;
-  private _isLinked = false;
+  private _program: WebGLProgram
+  private _gl: WebGL2RenderingContext
+  private _isLinked = false
 
   constructor (gl: WebGL2RenderingContext) {
     this._gl = gl
@@ -47,10 +47,12 @@ export class ShaderProgram {
       return
     }
     const location = this._gl.getUniformLocation(this._program, name)
-    if (value as mat4) {
-      this._gl.uniformMatrix4fv(location, false, value)
-    } else {
+    console.log(1, value)
+    if (value.length === 4) {
+      console.log(value)
       this._gl.uniform4fv(location, value)
+    } else {
+      this._gl.uniformMatrix4fv(location, false, value)
     }
   }
 }

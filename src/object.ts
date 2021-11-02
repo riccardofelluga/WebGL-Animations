@@ -22,7 +22,7 @@ export class Object {
     this._program.bind()
 
     this._program.setUniform('color', [ 0.3, 0.2, 0.7, 1.0 ])
-    this._program.setUniform('projectionView', this._viewProjection)
+    // this._program.setUniform('projectionView', this._viewProjection)
 
     const posLocation = this._program.getLocation('vPosition')
     const posComponents = 3
@@ -32,7 +32,7 @@ export class Object {
   }
 
   render(): void {
-    this._program.setUniform('model', this._model)
+    // this._program.setUniform('model', this._model)
     this._geometry.render()
   }
 }
