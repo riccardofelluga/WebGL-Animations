@@ -9,17 +9,19 @@
     <script>
       function clicked(){console.log("meow");}
       function onHoverIn(id) {
-        document.getElementById(id).style.backgroundColor = "red";
-        document.getElementById(id).style.borderColor = "rgba(184, 184, 5, 0.5)";
+        document.getElementById(id).style.backgroundColor = "rgb(4, 119, 119)";
+        // "red";
+        document.getElementById(id).style.borderColor = "rgba(47, 168, 168, 0.5)";
+        // "rgba(184, 184, 5, 0.5)";
       }
       function onHoverOut(id) {
         document.getElementById(id).style.backgroundColor = "white";
-        document.getElementById(id).style.borderColor = "rgb(184, 184, 5)";
+        document.getElementById(id).style.borderColor = "rgb(47, 168, 168, 5)";
       }
     </script>
   </head>
   <body>
-    <div style="display: flex; flex-direction: row; background-color: red;">
+    <div style="display: flex; flex-direction: row; background-color: rgb(4, 119, 119)">
       <h2 style="width: 50%; max-height: 100px;  text-align: left; padding-left: 5%;">WebGL Animations 🚀</h2>
       <h2 style="width: 50%; max-height: 100px; text-align: right; padding-right: 5%;">Jacob Young | Riccardo Felluga | Unni Kohonen</h2>
     </div>
@@ -43,9 +45,9 @@
     </div>
 
     <!-- FOOTER  -->
-    <div style="display: flex; flex-direction: row; background: red; max-height: 100px; justify-content: space-around;">
+    <div style="display: flex; flex-direction: row; background: rgb(4, 119, 119); max-height: 100px; justify-content: space-around;">
       <div class="timeline"></div>
-      <div style="display: flex; width: 30%; margin-right: 5%; background-color: red;">
+      <div style="display: flex; width: 30%; margin-right: 5%; background-color: rgb(4, 119, 119);">
         <div style="display: flex; flex-direction: row; width: 33%; padding: 10px; flex-shrink: 3;">
           <button id="b1" onclick="clicked()" onmouseover="onHoverIn(this.id)" onmouseout="onHoverOut(this.id)">
             <i class="fas fa-play fa-2x text-primary"></i> 
