@@ -1,5 +1,9 @@
-attribute vec4 a_pos;
+attribute vec4 vPosition;
+
+uniform mat4 projectionView;
+uniform mat4 model;
 
 void main() {
-    gl_Position = a_pos;
+    //projectionMatrix * modelViewMatrix
+    gl_Position =  projectionView * model * vPosition;
 }
