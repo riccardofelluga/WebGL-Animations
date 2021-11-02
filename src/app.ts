@@ -7,8 +7,8 @@ function parseOBJ(text: string) {
 
   const vertexData = []
   const normalData = []
-  const vertexIndices = []
-  const normalIndices = []
+  const vertexIdx = []
+  const normalIdx = []
 
   const keywords = {
     v: (args: Array<string>) => {
@@ -19,8 +19,8 @@ function parseOBJ(text: string) {
     },
     f: (args: Array<string>) => {
       args.forEach(a => {
-        vertexIndices.push(parseFloat(a.split('/')[0]) - 1)
-        normalIndices.push(parseFloat(a.split('/')[2]) - 1)
+        vertexIdx.push(parseFloat(a.split('/')[0]) - 1)
+        normalIdx.push(parseFloat(a.split('/')[2]) - 1)
       })
     }
   }
@@ -44,12 +44,14 @@ function parseOBJ(text: string) {
     handler(args)
   }
 
-  return {
+  const ret: OBJData = {
     vertexData,
     normalData,
-    vertexIndices,
-    normalIndices
+    vertexIdx,
+    normalIdx
   }
+
+  return ret
 }
 
 class Camera {
@@ -111,29 +113,29 @@ function main() {
 
 
 
-  // const OBJtext = `
-  // v 0 0
-  // v 0 -0.5
-  // v -0.7 0
-  // v -0.7 -0.5
+  const OBJtext = `
+    v -1 -1 0
+    v -1 -0.5 0
+    v -0.5 -1 0
+    v -0.5 -0.5 0
 
-  // vn 1 1
-  // vn 1 1
-  // vn 1 1
-  // vn 1 1
+    vn 0 0 0
+    vn 0 0 0
+    vn 0 0 0
+    vn 0 0 0
 
-  // f 1//1 2//2 3//3
-  // f 3//3 2//2 4//4
-  // `
-  //   const obj = parseOBJ(OBJtext)
-  //   const mesh3 = new Geometry(gl, obj.vertexData, obj.indexData)
-  //   mesh3.setAttribute(a_location, a_components, 0, 0)
+    f 1//1 2//2 3//3
+    f 3//3 2//2 4//4
+  `
+  const obj = parseOBJ(OBJtext)
+  const cube2 = new Object(gl, obj, vertSrc, fragSrc)
 
   gl.clearColor(0.8, 0.7, 0.7, 0.5)
   gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
   gl.enable(gl.DEPTH_TEST)
 
   cube.render()
+  cube2.render()
 }
 
 window.onload = main
