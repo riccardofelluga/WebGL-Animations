@@ -1,7 +1,5 @@
 import { OBJData, Object } from './object'
-import { vec3, vec4, mat4, glMatrix } from 'gl-matrix'
-import { Geometry } from './geometry'
-import { ShaderProgram } from './shaderProgram'
+import { vec3, mat4, glMatrix } from 'gl-matrix'
 import fragSrc from './shaders/simple_fragment.glsl'
 import vertSrc from './shaders/simple_vertex.glsl'
 
