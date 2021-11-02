@@ -6,16 +6,25 @@ import fragSrc from './shaders/simple_fragment.glsl'
 import vertSrc from './shaders/simple_vertex.glsl'
 
 function parseOBJ(text: string) {
+
   const vertexData = []
-  const indexData = []
+  const normalData = []
+  const vertexIndices = []
+  const normalIndices = []
 
   const keywords = {
     v: (args: Array<string>) => {
-      args.forEach((a) => vertexData.push(parseFloat(a)))
+      args.forEach(a => vertexData.push(parseFloat(a)))
+    },
+    vn: (args: Array<string>) => {
+      args.forEach(a => normalData.push(parseFloat(a)))
     },
     f: (args: Array<string>) => {
-      args.forEach((a) => indexData.push(parseFloat(a) - 1))
-    },
+      args.forEach(a => {
+        vertexIndices.push(parseFloat(a.split('/')[0]) - 1)
+        normalIndices.push(parseFloat(a.split('/')[2]) - 1)
+      })
+    }
   }
 
   const lines = text.split('\n')
@@ -39,7 +48,9 @@ function parseOBJ(text: string) {
 
   return {
     vertexData,
-    indexData,
+    normalData,
+    vertexIndices,
+    normalIndices
   }
 }
 
@@ -102,14 +113,19 @@ function main() {
 
 
 
-  //   const OBJtext = `
+  // const OBJtext = `
   // v 0 0
   // v 0 -0.5
   // v -0.7 0
   // v -0.7 -0.5
 
-  // f 1 2 3
-  // f 3 2 4
+  // vn 1 1
+  // vn 1 1
+  // vn 1 1
+  // vn 1 1
+
+  // f 1//1 2//2 3//3
+  // f 3//3 2//2 4//4
   // `
   //   const obj = parseOBJ(OBJtext)
   //   const mesh3 = new Geometry(gl, obj.vertexData, obj.indexData)
