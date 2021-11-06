@@ -47,9 +47,7 @@ export class ShaderProgram {
       return
     }
     const location = this._gl.getUniformLocation(this._program, name)
-    console.log(1, value)
     if (value.length === 4) {
-      console.log(value)
       this._gl.uniform4fv(location, value)
     } else {
       this._gl.uniformMatrix4fv(location, false, value)

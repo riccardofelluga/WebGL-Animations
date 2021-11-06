@@ -1,5 +1,5 @@
 import { OBJData, Object } from './object'
-import { vec3, mat4, glMatrix } from 'gl-matrix'
+import { Camera } from './camera'
 import fragSrc from './shaders/simple_fragment.glsl'
 import vertSrc from './shaders/simple_vertex.glsl'
 
@@ -59,27 +59,30 @@ function parseOBJ(text: string) {
   return ret
 }
 
-class Camera {
-  private _eye: vec3
-  private _center: vec3
-  private _direction: vec3
-  private _up: vec3
-  private _aspectRatio = 1.333
-  private _fov = 60.0
+const OBJtext = `
+v 1.000000 1.000000 -1.000000
+v 1.000000 -1.000000 -1.000000
+v 1.000000 1.000000 1.000000
+v 1.000000 -1.000000 1.000000
+v -1.000000 1.000000 -1.000000
+v -1.000000 -1.000000 -1.000000
+v -1.000000 1.000000 1.000000
+v -1.000000 -1.000000 1.000000
 
-  constructor(eye: vec3, direction: vec3, up: vec3) {
-    this._eye = eye
-    this._direction = direction
-    this._up = up
-    this._center = vec3.add(vec3.create(), this._eye, this._direction)
-  }
+vn 0.0000 1.0000 0.0000
+vn 0.0000 0.0000 1.0000
+vn -1.0000 0.0000 0.0000
+vn 0.0000 -1.0000 0.0000
+vn 1.0000 0.0000 0.0000
+vn 0.0000 0.0000 -1.0000
 
-  viewProjectionMatrix(): mat4{
-    const perspective = mat4.perspective(mat4.create(), glMatrix.toRadian(this._fov), this._aspectRatio, 0.1, 100.0)
-    const lookAt = mat4.lookAt(mat4.create(), this._eye, this._center, this._up)
-    return mat4.mul(mat4.create(), perspective, lookAt)
-  }
-}
+f 1/1/1 5/2/1 7/3/1 3/4/1
+f 4/5/2 3/4/2 7/6/2 8/7/2
+f 8/8/3 7/9/3 5/10/3 6/11/3
+f 6/12/4 2/13/4 4/5/4 8/14/4
+f 2/13/5 1/1/5 3/4/5 4/5/5
+f 6/11/6 5/10/6 1/1/6 2/13/6
+`
 
 function main() {
   const canvas = <HTMLCanvasElement>document.querySelector('#gl-context')
@@ -90,56 +93,18 @@ function main() {
   }
   gl.viewport(0, 0, canvas.width, canvas.height)
 
-  const data: OBJData = {
-    vertexData: [
-      0.5, -0.5, 0.5,
-      -0.5, -0.5, 0.5,
-      -0.5, 0.5, 0.5,
-      0.5, 0.5, 0.5,
-      0.5, -0.5, -0.5,
-      -0.5, -0.5, -0.5,
-      -0.5, 0.5, -0.5,
-      0.5, 0.5, -0.5
-    ],
-    vertexIdx: [
-      0, 1, 2, 1, 2, 3,
-      4, 5, 6, 5, 6, 7,
-      4, 0, 3, 0, 3, 7,
-      5, 1, 2, 1, 2, 6,
-      3, 2, 6, 2, 6, 7,
-      0, 1, 3, 1, 3, 4,
-    ],
-    normalData: [],
-    normalIdx: []
-  }
+  const camera = new Camera([ 1.0, 2.0, 3.0 ], [ 0.0, 0.0, 0.0 ], [ 0.0, 1.0, 0.0 ])
 
-  const camera = new Camera([ 0.0, 0.0, 3.0 ], [ 0.0, 0.0, -1.0 ], [ 0.0, 1.0, 0.0 ])
-  const cube = new Object(gl, data, vertSrc, fragSrc)
-
-
-
-  const OBJtext = `
-    v 1 1 0
-    v 0.5 1 0
-    v 0.5 0.5 0
-    v 1 0.5 0
-
-    vn 0 0 0
-    vn 0 0 0
-    vn 0 0 0
-    vn 0 0 0
-
-    f 1//1 2//2 3//3 4//4
-  `
   const obj = parseOBJ(OBJtext)
-  const cube2 = new Object(gl, obj, vertSrc, fragSrc)
+  const cube = new Object(gl, obj, vertSrc, fragSrc)
 
   gl.clearColor(0.8, 0.7, 0.7, 0.5)
-  gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
   gl.enable(gl.DEPTH_TEST)
+  gl.enable(gl.CULL_FACE)
 
-  cube.render()
-  cube2.render()
+  gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+
+  cube.render(camera.viewProjectionMatrix())
 }
 
 window.onload = main
