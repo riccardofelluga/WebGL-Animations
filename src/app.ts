@@ -18,10 +18,15 @@ function parseOBJ(text: string) {
       args.forEach(a => normalData.push(parseFloat(a)))
     },
     f: (args: Array<string>) => {
-      args.forEach(a => {
-        vertexIdx.push(parseFloat(a.split('/')[0]) - 1)
-        normalIdx.push(parseFloat(a.split('/')[2]) - 1)
-      })
+      for (let i = 1; i < args.length - 1; i++) {
+        vertexIdx.push(parseFloat(args[0].split('/')[0]) - 1)
+        vertexIdx.push(parseFloat(args[i].split('/')[0]) - 1)
+        vertexIdx.push(parseFloat(args[i+1].split('/')[0]) - 1)
+
+        normalIdx.push(parseFloat(args[0].split('/')[2]) - 1)
+        normalIdx.push(parseFloat(args[i].split('/')[2]) - 1)
+        normalIdx.push(parseFloat(args[i+1].split('/')[2]) - 1)
+      }
     }
   }
 
@@ -114,18 +119,17 @@ function main() {
 
 
   const OBJtext = `
-    v -1 -1 0
-    v -1 -0.5 0
-    v -0.5 -1 0
-    v -0.5 -0.5 0
+    v 1 1 0
+    v 0.5 1 0
+    v 0.5 0.5 0
+    v 1 0.5 0
 
     vn 0 0 0
     vn 0 0 0
     vn 0 0 0
     vn 0 0 0
 
-    f 1//1 2//2 3//3
-    f 3//3 2//2 4//4
+    f 1//1 2//2 3//3 4//4
   `
   const obj = parseOBJ(OBJtext)
   const cube2 = new Object(gl, obj, vertSrc, fragSrc)
