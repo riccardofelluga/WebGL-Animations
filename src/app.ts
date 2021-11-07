@@ -1,6 +1,7 @@
 import { OBJData, Object } from './object'
 import { Camera } from './camera'
 import fragSrc from './shaders/simple_fragment.glsl'
+import { mat4 } from 'gl-matrix'
 import vertSrc from './shaders/simple_vertex.glsl'
 
 function parseOBJ(text: string) {
@@ -99,15 +100,23 @@ function main() {
   const cube = new Object(gl, obj, vertSrc, fragSrc)
   cube.setColor([ 0.3, 0.2, 0.7, 1.0 ])
 
+  function render(time){
+    time *= 0.001
+
     const model = mat4.create()
+    mat4.fromYRotation(model, time)
     cube.setModelMatrix(model)
-  gl.clearColor(0.8, 0.7, 0.7, 0.5)
-  gl.enable(gl.DEPTH_TEST)
-  gl.enable(gl.CULL_FACE)
 
-  gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+    gl.clearColor(0.8, 0.7, 0.7, 0.5)
+    gl.enable(gl.DEPTH_TEST)
+    gl.enable(gl.CULL_FACE)
 
-  cube.render(camera.viewProjectionMatrix())
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+
+    cube.render(camera.viewProjectionMatrix())
+    requestAnimationFrame(render)
+  }
+  requestAnimationFrame(render)
 }
 
 window.onload = main
