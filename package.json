@@ -3,7 +3,8 @@
   "source": "src/index.html",
   "scripts": {
     "start": "parcel",
-    "build": "parcel build"
+    "build": "parcel build",
+    "no-cache": "parcel --no-cache"
   },
   "devDependencies": {
     "@parcel/transformer-glsl": "latest",
