@@ -1,5 +1,5 @@
+import { vec4, mat4 } from 'gl-matrix'
 import { Geometry } from './geometry'
-import { glMatrix, mat4 } from 'gl-matrix'
 import { ShaderProgram } from './shaderProgram'
 
 export interface OBJData {
@@ -12,7 +12,6 @@ export interface OBJData {
 export class Object {
   private _geometry: Geometry
   private _program: ShaderProgram
-  private _viewProjection = mat4.create()
   private _model = mat4.create()
 
   constructor(gl: WebGL2RenderingContext, data: OBJData, vertexSrc: string, fragmentSrc: string) {
@@ -21,13 +20,28 @@ export class Object {
     this._program.addShader(gl.FRAGMENT_SHADER, fragmentSrc)
     this._program.bind()
 
-    this._program.setUniform('color', [ 0.3, 0.2, 0.7, 1.0 ])
-
-    const posLocation = this._program.getLocation('vPosition')
+    const posLocation = this._program.getLocation('aPosition')
     const posComponents = 3
+    const normLocation = this._program.getLocation('aNorm')
+    const normComponents = 3
 
-    this._geometry = new Geometry(gl, data.vertexData, data.vertexIdx)
+    const vao = [ ...data.vertexData, ...data.normalData ]
+    const ibo = [ ...data.vertexIdx, ...data.normalIdx ]
+
+    console.log(posLocation, posComponents, normLocation, normComponents)
+
+    this._geometry = new Geometry(gl, vao, ibo)
     this._geometry.setAttribute(posLocation, posComponents, 0, 0)
+    this._geometry.setAttribute(normLocation, normComponents, 0, data.vertexData.length)
+  }
+
+  setColor(colorRGBA: vec4): void{
+    this._program.setUniform('uColor', colorRGBA)
+    this._program.setUniform('uLightPosition', [ 1.0, 0.7, 0.5 ])
+  }
+
+  setModelMatrix(model: mat4): void{
+    this._model = model
   }
 
   render(projectionViewMatrix: mat4): void {
