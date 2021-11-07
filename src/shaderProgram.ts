@@ -1,4 +1,4 @@
-import { vec4, mat4 } from 'gl-matrix'
+import { vec3, vec4, mat4 } from 'gl-matrix'
 
 export class ShaderProgram {
   private _program: WebGLProgram
@@ -41,13 +41,15 @@ export class ShaderProgram {
     return this._gl.getAttribLocation(this._program, name)
   }
 
-  setUniform(name: string, value: vec4 | mat4): void {
+  setUniform(name: string, value: vec3 | vec4 | mat4): void {
     if (!this._isLinked) {
       console.log('Program must be liked before setting uniform!')
       return
     }
     const location = this._gl.getUniformLocation(this._program, name)
-    if (value.length === 4) {
+    if (value.length === 3) {
+      this._gl.uniform3fv(location, value)
+    } else if (value.length === 4) {
       this._gl.uniform4fv(location, value)
     } else {
       this._gl.uniformMatrix4fv(location, false, value)
