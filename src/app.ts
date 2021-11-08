@@ -159,7 +159,7 @@ function main() {
     mat4.fromYRotation(model, time)
     cube.setModelMatrix(model)
 
-    gl.clearColor(0.8, 0.7, 0.7, 0.5)
+    gl.clearColor(0.12, 0.14, 0.17, 1.0)
     gl.enable(gl.DEPTH_TEST)
     gl.enable(gl.CULL_FACE)
 
