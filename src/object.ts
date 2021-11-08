@@ -37,7 +37,7 @@ export class Object {
 
   setColor(colorRGBA: vec4): void{
     this._program.setUniform('uColor', colorRGBA)
-    this._program.setUniform('uLightPosition', [ 1.0, 0.7, 0.5 ])
+    this._program.setUniform('uLightPosition', [ 2.0, 3.7, 2.5 ])
   }
 
   setModelMatrix(model: mat4): void{
