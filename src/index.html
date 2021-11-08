@@ -3,12 +3,16 @@
   <head>
     <meta charset="utf-8"/>
     <title>🚀WebGL</title>
-  <link rel="icon"
-    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚀</text></svg>">
+    <link rel="icon"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🚀</text></svg>">
+    <link rel="stylesheet" href="style.css">
     <script type="module" src="app.ts"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.12.0/js/all.js"></script>
     <script>
-      function clicked(){console.log("meow");}
+      function clicked(id){
+      console.log("meow");
+      document.getElementById(id).style.backgroundColor = "lightgreen";
+    }
       function onHoverIn(id) {
         document.getElementById(id).style.backgroundColor = "rgb(4, 119, 119)";
         // "red";
@@ -19,56 +23,81 @@
         document.getElementById(id).style.backgroundColor = "white";
         document.getElementById(id).style.borderColor = "rgb(47, 168, 168, 5)";
       }
+
+      function resizeCanvasToDisplaySize(canvas) {
+        // Lookup the size the browser is displaying the canvas in CSS pixels.
+        const displayWidth  = canvas.clientWidth;
+        const displayHeight = canvas.clientHeight;
+      
+        // Check if the canvas is not the same size.
+        const needResize = canvas.width  !== displayWidth ||
+                          canvas.height !== displayHeight;
+      
+        if (needResize) {
+          // Make the canvas the same size
+          canvas.width  = displayWidth;
+          canvas.height = displayHeight;
+        }
+      
+        return needResize;
+      }
     </script>
   </head>
   <body>
-    <div style="display: flex; flex-direction: row; background-color: rgb(4, 119, 119)">
-      <h2 style="width: 50%; max-height: 100px;  text-align: left; padding-left: 5%;">WebGL Animations 🚀</h2>
-      <h2 style="width: 50%; max-height: 100px; text-align: right; padding-right: 5%;">Jacob Young | Riccardo Felluga | Unni Kohonen</h2>
-    </div>
-
-    <!-- MIDDLE CONTENT Push this in about 10%-->
-    <div style="display: flex; flex-direction: row;  min-height: 700px; background-color: rgb(24, 24, 24)">
-      <div style="display: flex; width: 80%; justify-content: center;">
-        <canvas id="gl-context" width="640" height="480"></canvas>
-      </div>
-      <div class="file_properties">
-        <div class="file_info" style="height: 90%;">
-          <h4>Object attributes:</h4>
-          <h4>file type: </h4>
-          <h4>file size: </h4>
-          <h4>num polys: </h4>
+    <div id="all_content">
+      <!-- HEADER -->
+      <div id="header">
+        <div class="sub_header">
+          <h2 style="text-align: left; padding-left: 5%;">WebGL Animations 🚀</h2>
         </div>
-        <div class="add_file" style="display: flex; flex-direction: column; height: 10%; margin: 25px; justify-content: center; align-content: center; text-align: center;">
-          <input type="file">
+        <div class="sub_header">
+          <h2 style="text-align: right; padding-right: 5%;">Jacob Young | Riccardo Felluga | Unni Kohonen</h2>
         </div>
       </div>
-    </div>
+      <!-- END HEADER -->
 
-    <!-- FOOTER  -->
-    <div style="display: flex; flex-direction: row; background: rgb(4, 119, 119); max-height: 100px; justify-content: space-around;">
-      <div class="timeline"></div>
-      <div style="display: flex; width: 30%; margin-right: 5%; background-color: rgb(4, 119, 119);">
-        <div style="display: flex; flex-direction: row; width: 33%; padding: 10px; flex-shrink: 3;">
-          <button id="b1" onclick="clicked()" onmouseover="onHoverIn(this.id)" onmouseout="onHoverOut(this.id)">
-            <i class="fas fa-play fa-2x text-primary"></i> 
-          </button>
-          <button id="b2" onclick="clicked()" onmouseover="onHoverIn(this.id)" onmouseout="onHoverOut(this.id)">
-            <i class="fas fa-pause fa-2x text-primary"></i> 
-          </button>
+      <!-- MIDDLE CONTENT Push this in about 10%-->
+      <div id="content">
+        <div class="sub_content">
+          <canvas id="gl-context" width="640" height="480"></canvas>
         </div>
-        <div style="display: flex; flex-direction: row; width: 33%; padding: 10px; flex-shrink: 3;">
-          <button id="b3" onclick="clicked()" onmouseover="onHoverIn(this.id)" onmouseout="onHoverOut(this.id)">
-            <i class="fas fa-backward fa-2x text-primary"></i> 
-          </button>
-          <button id="b4" onclick="clicked()" onmouseover="onHoverIn(this.id)" onmouseout="onHoverOut(this.id)">
-            <i class="fas fa-forward fa-2x text-primary"></i> 
-          </button>
+        <div class="file_properties">
+          <div class="file_info">
+            <h4>Object attributes:</h4>
+            <h4>file name: </h4>
+            <h4>file size: </h4>
+            <h4>num verts: </h4>
+            <h4>num normals: </h4>
+          </div>
+          <div id="add_file_button">
+            <input type="file">
+          </div>
         </div>
-        <div style="display: flex; flex-direction: row; width: 33%; padding: 10px; flex-shrink: 3;">
-          <button id="b5" onclick="clicked()" onmouseover="onHoverIn(this.id)" onmouseout="onHoverOut(this.id)">
-            <i class="fas fa-redo fa-2x text-primary"></i> 
+      </div>
+      <!-- END CONTENT -->
+
+      <!-- FOOTER  -->
+      <div id="footer">
+        <div class="timeline"></div>
+        <div id="frame_button_container">
+          <button id="b1" onclick="clicked(this.id)" onmouseover="onHoverIn(this.id)" onmouseout="onHoverOut(this.id)">
+            <i class="fas fa-play fa-1x text-primary"></i> 
           </button>
+          <button id="b2" onclick="clicked(this.id)" onmouseover="onHoverIn(this.id)" onmouseout="onHoverOut(this.id)">
+            <i class="fas fa-pause fa-1x text-primary"></i> 
+          </button>
+          <button id="b3" onclick="clicked(this.id)" onmouseover="onHoverIn(this.id)" onmouseout="onHoverOut(this.id)">
+            <i class="fas fa-backward fa-1x text-primary"></i> 
+          </button>
+          <button id="b4" onclick="clicked(this.id)" onmouseover="onHoverIn(this.id)" onmouseout="onHoverOut(this.id)">
+            <i class="fas fa-forward fa-1x text-primary"></i> 
+          </button>
+          <button id="b5" onclick="clicked(this.id)" onmouseover="onHoverIn(this.id)" onmouseout="onHoverOut(this.id)">
+            <i class="fas fa-redo fa-1x text-primary"></i> 
+          </button>
+          <!-- <div class="button_container"></div>
+          <div class="button_container"></div>
+          <div class="button_container"></div> -->
         </div>
       </div>
     </div>
