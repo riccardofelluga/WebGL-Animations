@@ -150,7 +150,7 @@ function main() {
   const obj = parseOBJ(OBJtext)
   console.log(obj)
   const cube = new Object(gl, obj, vertSrc, fragSrc)
-  cube.setColor([ 0.3, 0.2, 0.7, 1.0 ])
+  cube.setColor([ 0.8, 0.8, 0.8, 1.0 ])
 
   function render(time){
     time *= 0.001
