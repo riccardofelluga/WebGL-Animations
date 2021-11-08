@@ -10,7 +10,7 @@ out vec3 vNormal;
 out vec3 vPosition;
 
 void main() {
-    vNormal = aNorm;
+    vNormal = mat3(model) * aNorm;
     gl_Position =  projectionView * model * aPosition;
     vPosition = vec3(model * aPosition);
 }
