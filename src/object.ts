@@ -26,11 +26,11 @@ export class Object {
     const normComponents = 3
 
     const vao = [ ...data.vertexData, ...data.normalData ]
-    const ibo = [ ...data.vertexIdx, ...data.normalIdx ]
+    // const ibo = [ ...data.vertexIdx, ...data.normalIdx ]
 
     console.log(posLocation, posComponents, normLocation, normComponents)
 
-    this._geometry = new Geometry(gl, vao, ibo)
+    this._geometry = new Geometry(gl, vao, [])
     this._geometry.setAttribute(posLocation, posComponents, 0, 0)
     this._geometry.setAttribute(normLocation, normComponents, 0, data.vertexData.length)
   }

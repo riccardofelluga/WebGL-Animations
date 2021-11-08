@@ -14,5 +14,5 @@ void main() {
      vec3 light_dir = normalize(uLightPosition - vPosition);
      float diffuse_intensity = max(dot(normal, light_dir), 0.0);
      vec3 diffuse_color = diffuse_intensity * vec3(1);
-     outColor = vec4(diffuse_color, 1.0) * uColor; 
+     outColor = vec4(normal, 1.0); // * uColor; 
 }

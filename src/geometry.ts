@@ -15,6 +15,7 @@ export class Geometry {
     this._gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertexBuffer), gl.STATIC_DRAW)
 
     this._vboSize = vertexBuffer.length
+    console.log(this._vboSize, vertexBuffer)
     // this._iboSize = indexBuffer.length
     // this._iboId = this._gl.createBuffer()
     // this._gl.bindBuffer(this._gl.ELEMENT_ARRAY_BUFFER, this._iboId)
@@ -29,6 +30,6 @@ export class Geometry {
 
   render(): void {
     this._gl.bindVertexArray(this._vaoId)
-    this._gl.drawArrays(this._gl.TRIANGLES, 0, this._vboSize)
+    this._gl.drawArrays(this._gl.TRIANGLES, 0, this._vboSize/6)
   }
 }
