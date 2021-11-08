@@ -11,8 +11,6 @@ function parseOBJ(text: string) {
 
   const vertexData = []
   const normalData = []
-  const vertexIdx = []
-  const normalIdx = []
 
   const keywords = {
     v: (args: Array<string>) => {
@@ -96,9 +94,7 @@ function parseOBJ(text: string) {
 
   const ret: OBJData = {
     vertexData,
-    normalData,
-    vertexIdx,
-    normalIdx
+    normalData
   }
 
   return ret
