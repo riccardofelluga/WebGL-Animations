@@ -3,7 +3,7 @@ export class Geometry {
   private _vboId: WebGLBuffer
   private _iboId: WebGLBuffer
   private _vaoId: WebGLVertexArrayObject
-  private _iboSize: number
+  private _vboSize: number
 
   constructor (gl: WebGL2RenderingContext, vertexBuffer: Array<number>, indexBuffer: Array<number>) {
     this._gl = gl
@@ -14,10 +14,11 @@ export class Geometry {
     this._gl.bindBuffer(this._gl.ARRAY_BUFFER, this._vboId)
     this._gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertexBuffer), gl.STATIC_DRAW)
 
-    this._iboSize = indexBuffer.length
-    this._iboId = this._gl.createBuffer()
-    this._gl.bindBuffer(this._gl.ELEMENT_ARRAY_BUFFER, this._iboId)
-    this._gl.bufferData(this._gl.ELEMENT_ARRAY_BUFFER, new Uint32Array(indexBuffer), this._gl.STATIC_DRAW)
+    this._vboSize = vertexBuffer.length
+    // this._iboSize = indexBuffer.length
+    // this._iboId = this._gl.createBuffer()
+    // this._gl.bindBuffer(this._gl.ELEMENT_ARRAY_BUFFER, this._iboId)
+    // this._gl.bufferData(this._gl.ELEMENT_ARRAY_BUFFER, new Uint32Array(indexBuffer), this._gl.STATIC_DRAW)
   }
 
   setAttribute(location: number, size: number, stride: number, offset: number): void {
@@ -28,6 +29,6 @@ export class Geometry {
 
   render(): void {
     this._gl.bindVertexArray(this._vaoId)
-    this._gl.drawElements(this._gl.TRIANGLES, this._iboSize, this._gl.UNSIGNED_INT, 0)
+    this._gl.drawArrays(this._gl.TRIANGLES, 0, this._vboSize)
   }
 }
