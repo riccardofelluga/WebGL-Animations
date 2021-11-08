@@ -4,9 +4,7 @@ import { ShaderProgram } from './shaderProgram'
 
 export interface OBJData {
   vertexData: Array<number>
-  vertexIdx: Array<number>
   normalData: Array<number>
-  normalIdx: Array<number>
 }
 
 export class Object {
@@ -25,19 +23,16 @@ export class Object {
     const normLocation = this._program.getLocation('aNorm')
     const normComponents = 3
 
-    const vao = [ ...data.vertexData, ...data.normalData ]
-    const ibo = [ ...data.vertexIdx, ...data.normalIdx ]
-
     console.log(posLocation, posComponents, normLocation, normComponents)
 
-    this._geometry = new Geometry(gl, vao, ibo)
-    this._geometry.setAttribute(posLocation, posComponents, 0, 0)
-    this._geometry.setAttribute(normLocation, normComponents, 0, data.vertexData.length)
+    this._geometry = new Geometry(gl, data.vertexData, data.normalData)
+    this._geometry.setAttribute(posLocation, posComponents, 0, 0, false)
+    this._geometry.setAttribute(normLocation, normComponents, 0, 0, true)
   }
 
   setColor(colorRGBA: vec4): void{
     this._program.setUniform('uColor', colorRGBA)
-    this._program.setUniform('uLightPosition', [ 1.0, 0.7, 0.5 ])
+    this._program.setUniform('uLightPosition', [ 2.0, 3.7, 2.5 ])
   }
 
   setModelMatrix(model: mat4): void{
