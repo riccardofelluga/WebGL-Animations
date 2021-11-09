@@ -23,8 +23,6 @@ export class Object {
     const normLocation = this._program.getLocation('aNorm')
     const normComponents = 3
 
-    console.log(posLocation, posComponents, normLocation, normComponents)
-
     this._geometry = new Geometry(gl, data.vertexData, data.normalData)
     this._geometry.setAttribute(posLocation, posComponents, 0, 0, false)
     this._geometry.setAttribute(normLocation, normComponents, 0, 0, true)
