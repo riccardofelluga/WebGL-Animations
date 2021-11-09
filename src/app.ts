@@ -15,18 +15,12 @@ function parseOBJ(text: string) {
   const keywords = {
     v: (args: Array<string>) => {
       tmpV.push(args.map(a => parseFloat(a)))
-      //args.forEach(a => vertexData.push(parseFloat(a)))
-      //args.forEach(a => tmpV.push(parseFloat(a)))
-      console.log(tmpV)
     },
     vn: (args: Array<string>) => {
-      //args.forEach(a => normalData.push(parseFloat(a)))
       tmpN.push(args.map(a => parseFloat(a)))
-      //args.forEach(a => tmpN.push(parseFloat(a)))
     },
     f: (args: Array<string>) => {
       for (let i = 1; i < args.length - 1; i++) {
-        //console.log('aa',tmpV[parseInt(args[0].split('/')[1]) - 1])
         tmpV[parseInt(args[0].split('/')[0]) - 1].forEach(a => vertexData.push(parseFloat(a)))
         tmpV[parseInt(args[i].split('/')[0]) - 1].forEach(a => vertexData.push(parseFloat(a)))
         tmpV[parseInt(args[i+1].split('/')[0]) - 1].forEach(a => vertexData.push(parseFloat(a)))
@@ -34,41 +28,6 @@ function parseOBJ(text: string) {
         tmpN[parseInt(args[0].split('/')[2]) - 1].forEach(a => normalData.push(parseFloat(a)))
         tmpN[parseInt(args[i].split('/')[2]) - 1].forEach(a => normalData.push(parseFloat(a)))
         tmpN[parseInt(args[i+1].split('/')[2]) - 1].forEach(a => normalData.push(parseFloat(a)))
-
-
-
-        /*
-          console.log(parseInt(args[0].split('/')[0]) - 1)
-          console.log(parseInt(args[i].split('/')[0]) - 1)
-          console.log(parseInt(args[i+1].split('/')[0]) - 1)
-
-          vertexData.push(parseFloat(tmpV[parseInt(args[0].split('/')[0]) - 1]))
-          vertexData.push(parseFloat(tmpV[parseInt(args[0].split('/')[0]) - 1 + 1]))
-          vertexData.push(parseFloat(tmpV[parseInt(args[0].split('/')[0]) - 1 + 2]))
-
-          vertexData.push(parseFloat(tmpV[parseInt(args[i].split('/')[0]) - 1]))
-          vertexData.push(parseFloat(tmpV[parseInt(args[i].split('/')[0]) - 1 + 1]))
-          vertexData.push(parseFloat(tmpV[parseInt(args[i].split('/')[0]) - 1 + 2]))
-
-          vertexData.push(parseFloat(tmpV[parseInt(args[i+1].split('/')[0]) - 1]))
-          vertexData.push(parseFloat(tmpV[parseInt(args[i+1].split('/')[0]) - 1 + 1]))
-          vertexData.push(parseFloat(tmpV[parseInt(args[i+1].split('/')[0]) - 1 + 2]))
-
-          */
-        //normalData.push(parseFloat(tmpN[parseInt(args[0].split('/')[2]) - 1]))
-        //normalData.push(parseFloat(tmpN[parseInt(args[i].split('/')[2]) - 1]))
-        //normalData.push(parseFloat(tmpN[parseInt(args[i+1].split('/')[2]) - 1]))
-
-        
-        /*
-        vertexIdx.push(parseFloat(args[0].split('/')[0]) - 1)
-        vertexIdx.push(parseFloat(args[i].split('/')[0]) - 1)
-        vertexIdx.push(parseFloat(args[i+1].split('/')[0]) - 1)
-
-        normalIdx.push(parseFloat(args[0].split('/')[2]) - 1)
-        normalIdx.push(parseFloat(args[i].split('/')[2]) - 1)
-        normalIdx.push(parseFloat(args[i+1].split('/')[2]) - 1)
-        */
       }
     }
   }
@@ -100,17 +59,7 @@ function parseOBJ(text: string) {
   return ret
 }
 
-const OBJtext = `
-v 1 1 0
-v 1 0.5 0
-v 0.5 0.5 0
-v 0.5 1 0
-
-vn 1 1 0
-
-f 1//1 2//1 3//1 4//1
-`
-
+let OBJtext = ''
 /*`
 v 1.000000 1.000000 -1.000000
 v 1.000000 -1.000000 -1.000000
@@ -172,3 +121,7 @@ function main() {
 }
 
 window.onload = main
+window.loadOBJ = function (text: string) {
+  OBJtext = text
+  main()
+}

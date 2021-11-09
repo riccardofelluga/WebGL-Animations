@@ -41,6 +41,19 @@
       
         return needResize;
       }
+      function handleFile(id) {
+        const input = document.getElementById("fileinput");
+        const file = input.files[0];
+        let fileContent = "";
+
+        const fr = new FileReader();
+        fr.onload = () => {
+          fileContent = fr.result;
+          loadOBJ(fileContent);
+        }
+
+        fr.readAsText(file);
+      }
     </script>
   </head>
   <body>
@@ -70,7 +83,7 @@
             <h4>num normals: </h4>
           </div>
           <div id="add_file_button">
-            <input type="file">
+            <input type="file" id="fileinput" onchange="handleFile(this.id)">
           </div>
         </div>
       </div>
