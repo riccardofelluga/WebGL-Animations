@@ -5,6 +5,8 @@ import { ShaderProgram } from './shaderProgram'
 export interface OBJData {
   vertexData: Array<number>
   normalData: Array<number>
+  controlPointData: Array<number>
+  animationMode: Boolean
 }
 
 export class Object {
