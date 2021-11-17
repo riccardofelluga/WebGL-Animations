@@ -8,11 +8,17 @@ function parseOBJ(text: string) {
 
   const tmpV = []
   const tmpN = []
+  const tmpC = []
 
   const vertexData = []
   const normalData = []
+  const controlPointData = []
+  let animationMode = false //false = geometric, true = vertex
 
   const keywords = {
+    a: (args: Array<string>) => {
+      animationMode = args[0] === 'v'
+    },
     v: (args: Array<string>) => {
       tmpV.push(args.map(a => parseFloat(a)))
     },
@@ -28,7 +34,15 @@ function parseOBJ(text: string) {
         tmpN[parseInt(args[0].split('/')[2]) - 1].forEach(a => normalData.push(parseFloat(a)))
         tmpN[parseInt(args[i].split('/')[2]) - 1].forEach(a => normalData.push(parseFloat(a)))
         tmpN[parseInt(args[i+1].split('/')[2]) - 1].forEach(a => normalData.push(parseFloat(a)))
+
+        tmpC[parseInt(args[0].split('/')[3]) - 1].forEach(a => controlPointData.push(parseFloat(a)))
+        tmpC[parseInt(args[i].split('/')[3]) - 1].forEach(a => controlPointData.push(parseFloat(a)))
+        tmpC[parseInt(args[i+1].split('/')[3]) - 1].forEach(a => controlPointData.push(parseFloat(a)))
       }
+    },
+    c: (args: Array<string>) => {
+      tmpC.push(args.map(a => parseFloat(a)))
+      console.log(tmpC)
     }
   }
 
@@ -53,7 +67,9 @@ function parseOBJ(text: string) {
 
   const ret: OBJData = {
     vertexData,
-    normalData
+    normalData,
+    controlPointData,
+    animationMode
   }
 
   return ret
@@ -61,6 +77,8 @@ function parseOBJ(text: string) {
 
 let OBJtext = ''
 /*`
+a g
+
 v 1.000000 1.000000 -1.000000
 v 1.000000 -1.000000 -1.000000
 v 1.000000 1.000000 1.000000
@@ -77,12 +95,14 @@ vn 0.0000 -1.0000 0.0000
 vn 1.0000 0.0000 0.0000
 vn 0.0000 0.0000 -1.0000
 
-f 1/1/1 5/2/1 7/3/1 3/4/1
-f 4/5/2 3/4/2 7/6/2 8/7/2
-f 8/8/3 7/9/3 5/10/3 6/11/3
-f 6/12/4 2/13/4 4/5/4 8/14/4
-f 2/13/5 1/1/5 3/4/5 4/5/5
-f 6/11/6 5/10/6 1/1/6 2/13/6
+c 0 0 0 1 0 0 0 1 0 1 1 0
+
+f 1/1/1/1 5/2/1/1 7/3/1/1 3/4/1/1
+f 4/5/2/1 3/4/2/1 7/6/2/1 8/7/2/1
+f 8/8/3/1 7/9/3/1 5/10/3/1 6/11/3/1
+f 6/12/4/1 2/13/4/1 4/5/4/1 8/14/4/1
+f 2/13/5/1 1/1/5/1 3/4/5/1 4/5/5/1
+f 6/11/6/1 5/10/6/1 1/1/6/1 2/13/6/1
 `*/
 
 function main() {
