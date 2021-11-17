@@ -35,14 +35,15 @@ function parseOBJ(text: string) {
         tmpN[parseInt(args[i].split('/')[2]) - 1].forEach(a => normalData.push(parseFloat(a)))
         tmpN[parseInt(args[i+1].split('/')[2]) - 1].forEach(a => normalData.push(parseFloat(a)))
 
-        tmpC[parseInt(args[0].split('/')[3]) - 1].forEach(a => controlPointData.push(parseFloat(a)))
-        tmpC[parseInt(args[i].split('/')[3]) - 1].forEach(a => controlPointData.push(parseFloat(a)))
-        tmpC[parseInt(args[i+1].split('/')[3]) - 1].forEach(a => controlPointData.push(parseFloat(a)))
+        if (tmpC.length !== 0) {
+          tmpC[parseInt(args[0].split('/')[3]) - 1].forEach(a => controlPointData.push(parseFloat(a)))
+          tmpC[parseInt(args[i].split('/')[3]) - 1].forEach(a => controlPointData.push(parseFloat(a)))
+          tmpC[parseInt(args[i+1].split('/')[3]) - 1].forEach(a => controlPointData.push(parseFloat(a)))
+        }
       }
     },
     c: (args: Array<string>) => {
       tmpC.push(args.map(a => parseFloat(a)))
-      console.log(tmpC)
     }
   }
 
@@ -58,7 +59,6 @@ function parseOBJ(text: string) {
 
     const handler = keywords[keyword]
     if (!handler) {
-      console.log(`Unhandled keyword: ${keyword} at line ${i + 1}`)
       continue
     }
 
