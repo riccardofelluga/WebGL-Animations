@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8"/>
@@ -8,53 +8,6 @@
     <link rel="stylesheet" href="style.css">
     <script type="module" src="app.ts"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.12.0/js/all.js"></script>
-    <script>
-      function clicked(id){
-      console.log("meow");
-      document.getElementById(id).style.backgroundColor = "lightgreen";
-    }
-      function onHoverIn(id) {
-        document.getElementById(id).style.backgroundColor = "rgb(4, 119, 119)";
-        // "red";
-        document.getElementById(id).style.borderColor = "rgba(47, 168, 168, 0.5)";
-        // "rgba(184, 184, 5, 0.5)";
-      }
-      function onHoverOut(id) {
-        document.getElementById(id).style.backgroundColor = "white";
-        document.getElementById(id).style.borderColor = "rgb(47, 168, 168, 5)";
-      }
-
-      function resizeCanvasToDisplaySize(canvas) {
-        // Lookup the size the browser is displaying the canvas in CSS pixels.
-        const displayWidth  = canvas.clientWidth;
-        const displayHeight = canvas.clientHeight;
-      
-        // Check if the canvas is not the same size.
-        const needResize = canvas.width  !== displayWidth ||
-                          canvas.height !== displayHeight;
-      
-        if (needResize) {
-          // Make the canvas the same size
-          canvas.width  = displayWidth;
-          canvas.height = displayHeight;
-        }
-      
-        return needResize;
-      }
-      function handleFile(id) {
-        const input = document.getElementById("fileinput");
-        const file = input.files[0];
-        let fileContent = "";
-
-        const fr = new FileReader();
-        fr.onload = () => {
-          fileContent = fr.result;
-          loadOBJ(fileContent);
-        }
-
-        fr.readAsText(file);
-      }
-    </script>
   </head>
   <body>
     <div id="all_content">
@@ -83,7 +36,7 @@
             <h4>num normals: </h4>
           </div>
           <div id="add_file_button">
-            <input type="file" id="fileinput" onchange="handleFile(this.id)">
+            <input type="file" id="fileinput">
           </div>
         </div>
       </div>
@@ -93,19 +46,19 @@
       <div id="footer">
         <div class="timeline"></div>
         <div id="frame_button_container">
-          <button id="b1" onclick="clicked(this.id)" onmouseover="onHoverIn(this.id)" onmouseout="onHoverOut(this.id)">
+          <button id="b1">
             <i class="fas fa-play fa-1x text-primary"></i> 
           </button>
-          <button id="b2" onclick="clicked(this.id)" onmouseover="onHoverIn(this.id)" onmouseout="onHoverOut(this.id)">
+          <button id="b2">
             <i class="fas fa-pause fa-1x text-primary"></i> 
           </button>
-          <button id="b3" onclick="clicked(this.id)" onmouseover="onHoverIn(this.id)" onmouseout="onHoverOut(this.id)">
+          <button id="b3">
             <i class="fas fa-backward fa-1x text-primary"></i> 
           </button>
-          <button id="b4" onclick="clicked(this.id)" onmouseover="onHoverIn(this.id)" onmouseout="onHoverOut(this.id)">
+          <button id="b4">
             <i class="fas fa-forward fa-1x text-primary"></i> 
           </button>
-          <button id="b5" onclick="clicked(this.id)" onmouseover="onHoverIn(this.id)" onmouseout="onHoverOut(this.id)">
+          <button id="b5">
             <i class="fas fa-redo fa-1x text-primary"></i> 
           </button>
           <!-- <div class="button_container"></div>

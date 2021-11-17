@@ -3,6 +3,15 @@ import { Camera } from './camera'
 import fragSrc from './shaders/simple_fragment.glsl'
 import { mat4 } from 'gl-matrix'
 import vertSrc from './shaders/simple_vertex.glsl'
+import { ButtonFunctionality } from '.buttons';
+
+new ButtonFunctionality("fileinput");
+new ButtonFunctionality("b1");
+new ButtonFunctionality("b2");
+new ButtonFunctionality("b3");
+new ButtonFunctionality("b4");
+new ButtonFunctionality("b5");
+
 
 function parseOBJ(text: string) {
 
@@ -84,6 +93,8 @@ f 6/12/4 2/13/4 4/5/4 8/14/4
 f 2/13/5 1/1/5 3/4/5 4/5/5
 f 6/11/6 5/10/6 1/1/6 2/13/6
 `*/
+
+
 
 function main() {
   const canvas = <HTMLCanvasElement>document.querySelector('#gl-context')
