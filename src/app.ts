@@ -3,7 +3,7 @@ import { Camera } from './camera'
 import fragSrc from './shaders/simple_fragment.glsl'
 import { mat4 } from 'gl-matrix'
 import vertSrc from './shaders/simple_vertex.glsl'
-import { ButtonFunctionality } from '.buttons'
+import { ButtonFunctionality } from './buttons'
 
 new ButtonFunctionality('fileinput')
 new ButtonFunctionality('b1')
