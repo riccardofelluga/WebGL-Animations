@@ -24,6 +24,6 @@ jobs:
           node-version: '14'
       - name: install deps
         run: npm install
-      - name: start
-        run: npm start
+      - name: build
+        run: npm run build
 
