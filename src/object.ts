@@ -6,7 +6,7 @@ export interface OBJData {
   vertexData: Array<number>
   normalData: Array<number>
   controlPointData: Array<number>
-  animationMode: Boolean
+  animationMode: boolean
 }
 
 export class Object {

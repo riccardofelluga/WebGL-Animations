@@ -3,14 +3,14 @@ import { Camera } from './camera'
 import fragSrc from './shaders/simple_fragment.glsl'
 import { mat4 } from 'gl-matrix'
 import vertSrc from './shaders/simple_vertex.glsl'
-import { ButtonFunctionality } from '.buttons';
+import { ButtonFunctionality } from './buttons'
 
-new ButtonFunctionality("fileinput");
-new ButtonFunctionality("b1");
-new ButtonFunctionality("b2");
-new ButtonFunctionality("b3");
-new ButtonFunctionality("b4");
-new ButtonFunctionality("b5");
+new ButtonFunctionality('fileinput')
+new ButtonFunctionality('b1')
+new ButtonFunctionality('b2')
+new ButtonFunctionality('b3')
+new ButtonFunctionality('b4')
+new ButtonFunctionality('b5')
 
 
 function parseOBJ(text: string) {
