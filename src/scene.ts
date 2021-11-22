@@ -1,7 +1,6 @@
 import { ObjectData, SceneObject } from './sceneObject'
 import { Camera } from './camera'
 import fragSrc from './shaders/simple_fragment.glsl'
-import { mat4 } from 'gl-matrix'
 import vertSrc from './shaders/animation_vertex.vert'
 
 export interface SceneAnimationStatus {
@@ -30,14 +29,12 @@ export class Scene {
     this.gl_.enable(this.gl_.CULL_FACE)
   }
 
-  addObject(data: ObjectData){
 
   updateAnimation(dt){
     this.object_.updateTime(dt)
   }
 
   addObject(data: ObjectData) {
-    this.prepareAnimation(data.animationMode, data.controlPointData)
     const obj = new SceneObject(this.gl_, data, vertSrc, fragSrc)
     obj.setColor([ 0.8, 0.8, 0.8, 1.0 ])
     this.object_ = obj
