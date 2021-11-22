@@ -1,9 +1,7 @@
-import { ObjectData, SceneObject } from './sceneObject'
+import { Scene, SceneAnimationStatus } from './scene'
 import { ButtonFunctionality } from './buttons'
 import { Camera } from './camera'
-import fragSrc from './shaders/simple_fragment.glsl'
-import { mat4 } from 'gl-matrix'
-import vertSrc from './shaders/simple_vertex.glsl'
+import { ObjectData } from './sceneObject'
 
 new ButtonFunctionality('fileinput')
 new ButtonFunctionality('b1')
@@ -119,6 +117,11 @@ f 2/13/5/1 1/1/5/1 3/4/5/1 4/5/5/1
 f 6/11/6/1 5/10/6/1 1/1/6/1 2/13/6/1
 `*/
 
+const animationStatus: SceneAnimationStatus = {
+  isPlaying: false,
+  startFrame: 0,
+  endFrame: 150
+}
 
 
 function main() {
@@ -131,27 +134,21 @@ function main() {
   gl.viewport(0, 0, canvas.width, canvas.height)
 
   const camera = new Camera([ 2.0, 3.0, 4.0 ], [ 0.0, 0.0, 0.0 ], [ 0.0, 1.0, 0.0 ])
-
+  const scene = new Scene(gl, camera)
   const obj = parseOBJ(OBJtext)
+
   console.log(obj)
-  const cube = new Object(gl, obj, vertSrc, fragSrc)
-  cube.setColor([ 0.8, 0.8, 0.8, 1.0 ])
+  scene.addObject(obj)
 
   function render(time: DOMHighResTimeStamp){
     time *= 0.001
 
-    const model = mat4.create()
-    mat4.fromYRotation(model, time)
-    cube.setModelMatrix(model)
+    // const model = mat4.create()
+    // mat4.fromYRotation(model, time)
+    // cube.setModelMatrix(model)
 
-    gl.clearColor(0.12, 0.14, 0.17, 1.0)
-    gl.enable(gl.DEPTH_TEST)
-    gl.enable(gl.CULL_FACE)
-
-    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
-
-    cube.render(camera.viewProjectionMatrix())
-    requestAnimationFrame(render)
+    scene.renderScene(time, animationStatus)
+    if (animationStatus.isPlaying) requestAnimationFrame(render)
   }
   requestAnimationFrame(render)
 }
