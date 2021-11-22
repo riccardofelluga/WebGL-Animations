@@ -1,16 +1,22 @@
 import { ObjectData, SceneObject } from './sceneObject'
+import { ButtonFunctionality } from './buttons'
 import { Camera } from './camera'
 import fragSrc from './shaders/simple_fragment.glsl'
 import { mat4 } from 'gl-matrix'
 import vertSrc from './shaders/simple_vertex.glsl'
 
-new ButtonFunctionality("fileinput");
-new ButtonFunctionality("b1");
-new ButtonFunctionality("b2");
-new ButtonFunctionality("b3");
-new ButtonFunctionality("b4");
-new ButtonFunctionality("b5");
+new ButtonFunctionality('fileinput')
+new ButtonFunctionality('b1')
+new ButtonFunctionality('b2')
+new ButtonFunctionality('b3')
+new ButtonFunctionality('b4')
+new ButtonFunctionality('b5')
 
+window.onload = main
+window.loadOBJ = function (text: string) {
+  OBJtext = text
+  main()
+}
 
 function parseOBJ(text: string) {
 
@@ -148,10 +154,4 @@ function main() {
     requestAnimationFrame(render)
   }
   requestAnimationFrame(render)
-}
-
-window.onload = main
-window.loadOBJ = function (text: string) {
-  OBJtext = text
-  main()
 }
