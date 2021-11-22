@@ -11,10 +11,7 @@ new ButtonFunctionality('b4')
 new ButtonFunctionality('b5')
 
 window.onload = main
-window.loadOBJ = function (text: string) {
-  OBJtext = text
-  main()
-}
+window.loadOBJ = loadOBJ
 
 function parseOBJ(text: string) {
 
@@ -88,7 +85,7 @@ function parseOBJ(text: string) {
 }
 
 let OBJtext = `
-a g
+a v
 
 v 1.000000 1.000000 -1.000000
 v 1.000000 -1.000000 -1.000000
@@ -122,6 +119,14 @@ const animationStatus: SceneAnimationStatus = {
   endFrame: 150
 }
 
+let scene
+
+function loadOBJ(text) {
+  const obj = parseOBJ(text)
+  console.log(obj)
+  scene.addObject(obj)
+  scene.setKeyframes(animationStatus.startFrame, animationStatus.endFrame)
+}
 
 function main() {
   const canvas = <HTMLCanvasElement>document.querySelector('#gl-context')
@@ -133,12 +138,9 @@ function main() {
   gl.viewport(0, 0, canvas.width, canvas.height)
 
   const camera = new Camera([ 2.0, 3.0, 4.0 ], [ 0.0, 0.0, 0.0 ], [ 0.0, 1.0, 0.0 ])
-  const scene = new Scene(gl, camera)
-  const obj = parseOBJ(OBJtext)
+  scene = new Scene(gl, camera)
 
-  console.log(obj)
-  scene.addObject(obj)
-  scene.setKeyframes(animationStatus.startFrame, animationStatus.endFrame)
+  loadOBJ(OBJtext)
 
   function render(time: DOMHighResTimeStamp){
     time *= 0.001
