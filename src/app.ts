@@ -1,9 +1,8 @@
-import { OBJData, Object } from './object'
+import { ObjectData, SceneObject } from './sceneObject'
 import { Camera } from './camera'
 import fragSrc from './shaders/simple_fragment.glsl'
 import { mat4 } from 'gl-matrix'
 import vertSrc from './shaders/simple_vertex.glsl'
-import { ButtonFunctionality } from './buttons';
 
 new ButtonFunctionality("fileinput");
 new ButtonFunctionality("b1");
@@ -74,7 +73,7 @@ function parseOBJ(text: string) {
     handler(args)
   }
 
-  const ret: OBJData = {
+  const ret: ObjectData = {
     vertexData,
     normalData,
     controlPointData,
@@ -132,7 +131,7 @@ function main() {
   const cube = new Object(gl, obj, vertSrc, fragSrc)
   cube.setColor([ 0.8, 0.8, 0.8, 1.0 ])
 
-  function render(time){
+  function render(time: DOMHighResTimeStamp){
     time *= 0.001
 
     const model = mat4.create()

@@ -2,19 +2,19 @@ import { vec4, mat4 } from 'gl-matrix'
 import { Geometry } from './geometry'
 import { ShaderProgram } from './shaderProgram'
 
-export interface OBJData {
+export interface ObjectData {
   vertexData: Array<number>
   normalData: Array<number>
   controlPointData: Array<number>
   animationMode: boolean
 }
 
-export class Object {
+export class SceneObject {
   private _geometry: Geometry
   private _program: ShaderProgram
   private _model = mat4.create()
 
-  constructor(gl: WebGL2RenderingContext, data: OBJData, vertexSrc: string, fragmentSrc: string) {
+  constructor(gl: WebGL2RenderingContext, data: ObjectData, vertexSrc: string, fragmentSrc: string) {
     this._program = new ShaderProgram(gl)
     this._program.addShader(gl.VERTEX_SHADER, vertexSrc)
     this._program.addShader(gl.FRAGMENT_SHADER, fragmentSrc)
