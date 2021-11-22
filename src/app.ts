@@ -87,8 +87,7 @@ function parseOBJ(text: string) {
   return ret
 }
 
-let OBJtext = ''
-/*`
+let OBJtext = `
 a g
 
 v 1.000000 1.000000 -1.000000
@@ -115,10 +114,10 @@ f 8/8/3/1 7/9/3/1 5/10/3/1 6/11/3/1
 f 6/12/4/1 2/13/4/1 4/5/4/1 8/14/4/1
 f 2/13/5/1 1/1/5/1 3/4/5/1 4/5/5/1
 f 6/11/6/1 5/10/6/1 1/1/6/1 2/13/6/1
-`*/
+`
 
 const animationStatus: SceneAnimationStatus = {
-  isPlaying: false,
+  isPlaying: true,
   startFrame: 0,
   endFrame: 150
 }
@@ -139,15 +138,12 @@ function main() {
 
   console.log(obj)
   scene.addObject(obj)
+  scene.setKeyframes(animationStatus.startFrame, animationStatus.endFrame)
 
   function render(time: DOMHighResTimeStamp){
     time *= 0.001
 
-    // const model = mat4.create()
-    // mat4.fromYRotation(model, time)
-    // cube.setModelMatrix(model)
-
-    scene.renderScene(time, animationStatus)
+    scene.renderScene(time)
     if (animationStatus.isPlaying) requestAnimationFrame(render)
   }
   requestAnimationFrame(render)

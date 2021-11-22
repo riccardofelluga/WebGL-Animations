@@ -29,6 +29,10 @@ export class ShaderProgram {
   bind(): void {
     if (!this._isLinked) {
       this._gl.linkProgram(this._program)
+      const linkSuccess = this._gl.getProgramParameter(this._program, this._gl.LINK_STATUS)
+      if (!linkSuccess){
+        console.error(this._gl.getProgramInfoLog(this._program))
+      }
       this._gl.validateProgram(this._program)
     }
     this._isLinked = true
@@ -41,15 +45,17 @@ export class ShaderProgram {
     return this._gl.getAttribLocation(this._program, name)
   }
 
-  setUniform(name: string, value: vec3 | vec4 | mat4): void {
+  setUniform(name: string, value: number | vec3 | vec4 | mat4): void {
     if (!this._isLinked) {
       console.log('Program must be liked before setting uniform!')
       return
     }
     const location = this._gl.getUniformLocation(this._program, name)
-    if (value.length === 3) {
+    if (typeof value === 'number'){
+      this._gl.uniform1f(location, value)
+    } else if (value.length === 3) {
       this._gl.uniform3fv(location, value)
-    } else if (value.length === 4) {
+    } else if ( value.length === 4) {
       this._gl.uniform4fv(location, value)
     } else {
       this._gl.uniformMatrix4fv(location, false, value)
