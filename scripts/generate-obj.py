@@ -12,7 +12,8 @@ ret = 'a v\n'
 c = 0
 d = {}
 
-for l in f:
+for line in f:
+    l = line.strip()+'\n'
     if l[0] == 'c':
         c += 1
         ret += l
