@@ -141,12 +141,12 @@ function main() {
   scene = new Scene(gl, camera)
 
   loadOBJ(OBJtext)
+  requestAnimationFrame(render)
+}
 
   function render(time: DOMHighResTimeStamp){
     time *= 0.001
 
     scene.renderScene(time)
     if (animationStatus.isPlaying) requestAnimationFrame(render)
-  }
-  requestAnimationFrame(render)
 }
