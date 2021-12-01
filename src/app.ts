@@ -124,7 +124,7 @@ let scene
 function loadOBJ(text) {
   const obj = parseOBJ(text)
   console.log(obj)
-  scene.addObject(obj)
+  scene.setObject(obj)
   scene.setKeyframes(animationStatus.startFrame, animationStatus.endFrame)
 }
 

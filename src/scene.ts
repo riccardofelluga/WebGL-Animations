@@ -30,12 +30,20 @@ export class Scene {
   }
 
 
-  updateAnimation(dt){
-    this.object_.updateTime(dt)
+  updateAnimation(){
+    if (this.currentFrame_ < this.endFrame_){
+      this.object_.updateTime(this.currentFrame_/this.endFrame_)
+      this.currentFrame_++
+    } else {
+      this.currentFrame_ = 0
+    }
   }
 
-  addObject(data: ObjectData) {
-    const obj = new SceneObject(this.gl_, data, vertSrc, fragSrc)
+  setObject(data: ObjectData) {
+    if (this.object_){
+      this.object_.destroy()
+    }
+    const obj = new SceneObject(this.gl_, data)
     obj.setColor([ 0.8, 0.8, 0.8, 1.0 ])
     this.object_ = obj
   }
@@ -48,9 +56,6 @@ export class Scene {
   renderScene(dt: DOMHighResTimeStamp){
     this.gl_.clear(this.gl_.COLOR_BUFFER_BIT | this.gl_.DEPTH_BUFFER_BIT)
     this.object_.render(this.camera_.viewProjectionMatrix())
-    if (this.currentFrame_ < this.endFrame_){
-      this.updateAnimation(this.currentFrame_/this.endFrame_)
-      this.currentFrame_++
-    }
+    this.updateAnimation()
   }
 }
