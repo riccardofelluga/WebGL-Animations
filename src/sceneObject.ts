@@ -1,5 +1,8 @@
 import { vec4, mat4 } from 'gl-matrix'
+import animSrc from './shaders/animation_vertex.vert'
+import fragSrc from './shaders/simple_fragment.frag'
 import { ShaderProgram } from './shaderProgram'
+import vertSrc from './shaders/simple_vertex.vert'
 
 export interface ObjectData {
   vertexData: Array<number>
@@ -21,11 +24,11 @@ export class SceneObject {
     3, -6, 3, 0,
     -1, 3, -3, 1 )
 
-  constructor(gl: WebGL2RenderingContext, data: ObjectData, vertexSrc: string, fragmentSrc: string) {
+  constructor(gl: WebGL2RenderingContext, data: ObjectData) {
     this.gl_ = gl
     this.program_ = new ShaderProgram(gl)
-    this.program_.addShader(gl.VERTEX_SHADER, vertexSrc)
-    this.program_.addShader(gl.FRAGMENT_SHADER, fragmentSrc)
+    this.program_.addShader(gl.VERTEX_SHADER, (data.controlPointData.length !== 0)?animSrc:vertSrc)
+    this.program_.addShader(gl.FRAGMENT_SHADER, fragSrc)
     this.program_.bind()
 
     this.vao_ = gl.createVertexArray()
@@ -33,13 +36,18 @@ export class SceneObject {
     this.setAttribute(pos, 'aPosition', 3, 0, 0)
     const norm = this.setBuffer(data.normalData)
     this.setAttribute(norm, 'aNorm', 3, 0, 0)
-    const control = this.setBuffer(data.controlPointData)
-    this.setAttribute(control, 'p0', 3, 12, 0)
-    this.setAttribute(control, 'p1', 3, 12, 3)
-    this.setAttribute(control, 'p2', 3, 12, 6)
-    this.setAttribute(control, 'p3', 3, 12, 9)
+    if (data.controlPointData.length !== 0) {
+      const control = this.setBuffer(data.controlPointData)
+      this.setAttribute(control, 'p0', 3, 12, 0)
+      this.setAttribute(control, 'p1', 3, 12, 3)
+      this.setAttribute(control, 'p2', 3, 12, 6)
+      this.setAttribute(control, 'p3', 3, 12, 9)
+      this.program_.setUniform('bPoly', this.bernsteinPoly_)
+    }
+  }
 
-    this.program_.setUniform('bPoly', this.bernsteinPoly_)
+  destroy(){
+    this.gl_.deleteVertexArray(this.vao_)
   }
 
   setBuffer(bufferData: Array<number>): WebGLBuffer {

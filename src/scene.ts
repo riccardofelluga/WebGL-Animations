@@ -1,7 +1,5 @@
 import { ObjectData, SceneObject } from './sceneObject'
 import { Camera } from './camera'
-import fragSrc from './shaders/simple_fragment.glsl'
-import vertSrc from './shaders/animation_vertex.vert'
 
 export interface SceneAnimationStatus {
     isPlaying: boolean,
