@@ -4,11 +4,11 @@ import { Camera } from './camera'
 import { ObjectData } from './sceneObject'
 
 new ButtonFunctionality('fileinput')
-new ButtonFunctionality('b1')
-new ButtonFunctionality('b2')
-new ButtonFunctionality('b3')
-new ButtonFunctionality('b4')
-new ButtonFunctionality('b5')
+new ButtonFunctionality('play')
+new ButtonFunctionality('pause')
+new ButtonFunctionality('backward')
+new ButtonFunctionality('forward')
+new ButtonFunctionality('restart')
 
 window.onload = main
 window.loadOBJ = loadOBJ
@@ -113,10 +113,14 @@ f 2/13/5/1 1/1/5/1 3/4/5/1 4/5/5/1
 f 6/11/6/1 5/10/6/1 1/1/6/1 2/13/6/1
 `
 
-const animationStatus: SceneAnimationStatus = {
+export const animationStatus: SceneAnimationStatus = {
   isPlaying: true,
+  currentFrame: 0,
   startFrame: 0,
-  endFrame: 150
+  endFrame: 150,
+  subStartFrame: 0,
+  subEndFrame: 150,
+  animForward: true
 }
 
 let scene
@@ -125,7 +129,7 @@ function loadOBJ(text) {
   const obj = parseOBJ(text)
   console.log(obj)
   scene.setObject(obj)
-  scene.setKeyframes(animationStatus.startFrame, animationStatus.endFrame)
+  scene.setAnimationStatus(animationStatus);
 }
 
 function main() {
@@ -144,9 +148,9 @@ function main() {
   requestAnimationFrame(render)
 }
 
-  function render(time: DOMHighResTimeStamp){
+  export function render(time: DOMHighResTimeStamp){
     time *= 0.001
-
-    scene.renderScene(time)
-    if (animationStatus.isPlaying) requestAnimationFrame(render)
+	
+	scene.renderScene(time)
+	requestAnimationFrame(render)
 }
