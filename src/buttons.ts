@@ -51,10 +51,10 @@ export class ButtonFunctionality {
     document.getElementById(id).style.borderColor = 'rgb(47, 168, 168, 5)'
   }
   handleFile(id): void {
-    const input = document.getElementById(id);
-	input.placeholder = "Hi.";
-    const file = input.files[0];
-    let fileContent = '';
+    const input = document.getElementById(id)
+	  // input.placeholder = "Hi.";
+    const file = input.files[0]
+    let fileContent = ''
 
     const fr = new FileReader()
     fr.onload = () => {
